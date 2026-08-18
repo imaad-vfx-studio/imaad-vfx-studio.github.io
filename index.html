@@ -13,9 +13,9 @@ content="ImaadVFX — Premium Visual Effects, Motion Graphics and Creative Digit
 
 <style>
 
-/* =====================================================
+/* =========================================================
    RESET
-===================================================== */
+========================================================= */
 
 * {
     margin: 0;
@@ -36,9 +36,13 @@ body {
     overflow-x: hidden;
 }
 
+body.loading {
+    overflow: hidden;
+}
+
 a {
-    color: inherit;
     text-decoration: none;
+    color: inherit;
 }
 
 button {
@@ -51,11 +55,11 @@ button {
 }
 
 
-/* =====================================================
+/* =========================================================
    LOADING SCREEN
-===================================================== */
+========================================================= */
 
-#loadingScreen {
+#loader {
     position: fixed;
     inset: 0;
     z-index: 99999;
@@ -63,25 +67,37 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
 
-    background: #050608;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0,229,255,.08),
+            transparent 35%
+        ),
+        #050608;
 
     transition:
-        opacity .6s ease,
-        visibility .6s ease;
+        opacity .45s ease,
+        visibility .45s ease;
 }
 
-#loadingScreen.hidden {
+#loader.hidden {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+}
+
+.loader-content {
+    width: 90%;
+    max-width: 300px;
+    text-align: center;
 }
 
 .loader-logo {
     font-size: 30px;
     font-weight: 800;
     letter-spacing: -1px;
+    color: #fff;
 }
 
 .loader-logo span {
@@ -90,34 +106,36 @@ button {
 
 .loader-text {
     margin-top: 12px;
-
-    color: #777;
-    font-size: 9px;
-    letter-spacing: 3px;
+    color: #777d87;
+    font-size: 10px;
+    letter-spacing: 2px;
 }
 
 .loader-bar {
-    width: 180px;
-    height: 2px;
-
-    margin-top: 20px;
-
+    width: 100%;
+    height: 3px;
+    margin-top: 22px;
     overflow: hidden;
     border-radius: 10px;
-
-    background: rgba(255,255,255,.1);
+    background: rgba(255,255,255,.08);
 }
 
 .loader-progress {
     width: 0%;
     height: 100%;
+    border-radius: 10px;
 
-    background: #00e5ff;
+    background:
+        linear-gradient(
+            90deg,
+            #00e5ff,
+            #8b5cff
+        );
 
-    animation: loading 1.8s ease forwards;
+    animation: loadingProgress 1.8s ease forwards;
 }
 
-@keyframes loading {
+@keyframes loadingProgress {
     from {
         width: 0%;
     }
@@ -128,18 +146,32 @@ button {
 }
 
 
-/* =====================================================
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root {
+    --bg: #050608;
+    --card: rgba(255,255,255,.045);
+    --text: #e9edf2;
+    --muted: #858b95;
+    --cyan: #00e5ff;
+    --purple: #8b5cff;
+    --border: rgba(255,255,255,.10);
+    --max-width: 1180px;
+}
+
+
+/* =========================================================
    BACKGROUND
-===================================================== */
+========================================================= */
 
 body::before {
     content: "";
-
     position: fixed;
     inset: 0;
-
-    pointer-events: none;
     z-index: -10;
+    pointer-events: none;
 
     background:
         radial-gradient(
@@ -157,11 +189,9 @@ body::before {
 .grid-background {
     position: fixed;
     inset: 0;
-
     z-index: -9;
     pointer-events: none;
-
-    opacity: .45;
+    opacity: .4;
 
     background-image:
         linear-gradient(
@@ -175,52 +205,26 @@ body::before {
         );
 
     background-size: 70px 70px;
-
-    mask-image:
-        linear-gradient(
-            to bottom,
-            black,
-            transparent 90%
-        );
 }
 
-
-/* =====================================================
-   CURSOR LIGHT
-===================================================== */
-
-.cursor-light {
+.noise {
     position: fixed;
-
-    width: 260px;
-    height: 260px;
-
-    border-radius: 50%;
-
+    inset: 0;
+    z-index: -7;
     pointer-events: none;
-    z-index: -2;
+    opacity: .018;
 
-    transform:
-        translate(-50%, -50%);
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(0,229,255,.08),
-            transparent 68%
-        );
-
-    filter: blur(8px);
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
 }
 
 
-/* =====================================================
+/* =========================================================
    PARTICLES
-===================================================== */
+========================================================= */
 
 #particles {
     position: fixed;
-
     inset: 0;
 
     width: 100%;
@@ -231,20 +235,47 @@ body::before {
 }
 
 
-/* =====================================================
+/* =========================================================
+   CURSOR GLOW
+========================================================= */
+
+.cursor-light {
+    position: fixed;
+
+    width: 250px;
+    height: 250px;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+    z-index: -3;
+
+    transform: translate(-50%, -50%);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,229,255,.08),
+            transparent 68%
+        );
+
+    filter: blur(10px);
+}
+
+
+/* =========================================================
    NAVBAR
-===================================================== */
+========================================================= */
 
 .navbar {
     position: fixed;
 
-    top: 18px;
+    top: 16px;
     left: 50%;
 
     transform: translateX(-50%);
 
     width: min(1150px, 92%);
-
     min-height: 60px;
 
     padding: 10px 16px;
@@ -255,12 +286,11 @@ body::before {
 
     background: rgba(7,9,13,.82);
 
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-
-    border: 1px solid rgba(255,255,255,.1);
-
+    border: 1px solid var(--border);
     border-radius: 16px;
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 
     z-index: 1000;
 
@@ -298,11 +328,11 @@ body::before {
             #8b5cff
         );
 
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 800;
 }
 
-.logo > span:last-child span {
+.logo span span {
     color: #00e5ff;
 }
 
@@ -312,18 +342,18 @@ body::before {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 23px;
 
     list-style: none;
 }
 
 .nav-links a {
-    color: #90949c;
+    color: #9298a1;
 
     font-size: 11px;
     font-weight: 600;
 
-    transition: color .25s ease;
+    transition: color .2s ease;
 }
 
 .nav-links a:hover {
@@ -336,12 +366,13 @@ body::before {
     border-radius: 8px;
 
     background: #00e5ff;
-
     color: #000 !important;
+
+    font-weight: 700 !important;
 }
 
 
-/* MOBILE MENU */
+/* MOBILE MENU BUTTON */
 
 .menu-button {
     display: none;
@@ -349,11 +380,10 @@ body::before {
     width: 38px;
     height: 38px;
 
-    border: 1px solid rgba(255,255,255,.1);
+    border: 1px solid var(--border);
     border-radius: 9px;
 
     background: rgba(255,255,255,.04);
-
     color: #fff;
 
     cursor: pointer;
@@ -362,9 +392,9 @@ body::before {
 }
 
 
-/* =====================================================
+/* =========================================================
    HERO
-===================================================== */
+========================================================= */
 
 .hero {
     min-height: 100vh;
@@ -377,7 +407,7 @@ body::before {
 
     text-align: center;
 
-    padding: 140px 20px 100px;
+    padding: 130px 20px 90px;
 
     overflow: hidden;
 }
@@ -393,54 +423,27 @@ body::before {
 }
 
 .hero-orb.one {
-    width: 420px;
-    height: 420px;
+    width: 400px;
+    height: 400px;
 
     background: rgba(0,229,255,.07);
 
     top: 20%;
-    left: 8%;
-
-    animation:
-        floatOne 8s ease-in-out infinite alternate;
+    left: 5%;
 }
 
 .hero-orb.two {
-    width: 380px;
-    height: 380px;
+    width: 360px;
+    height: 360px;
 
     background: rgba(139,92,255,.07);
 
     bottom: 10%;
-    right: 8%;
-
-    animation:
-        floatTwo 10s ease-in-out infinite alternate;
-}
-
-@keyframes floatOne {
-    from {
-        transform: translate(0,0);
-    }
-
-    to {
-        transform: translate(60px,-35px);
-    }
-}
-
-@keyframes floatTwo {
-    from {
-        transform: translate(0,0);
-    }
-
-    to {
-        transform: translate(-50px,40px);
-    }
+    right: 5%;
 }
 
 .hero-content {
     position: relative;
-
     z-index: 2;
 
     width: 100%;
@@ -457,9 +460,7 @@ body::before {
 
     padding: 7px 13px;
 
-    border:
-        1px solid rgba(0,229,255,.22);
-
+    border: 1px solid rgba(0,229,255,.22);
     border-radius: 30px;
 
     background: rgba(0,229,255,.035);
@@ -482,26 +483,16 @@ body::before {
 
     background: #00e5ff;
 
-    box-shadow:
-        0 0 12px #00e5ff;
-
-    animation: blink 1.5s infinite;
-}
-
-@keyframes blink {
-    50% {
-        opacity: .3;
-    }
+    box-shadow: 0 0 12px #00e5ff;
 }
 
 
 /* HERO TITLE */
 
 .hero h1 {
-    font-size:
-        clamp(50px, 10vw, 115px);
+    font-size: clamp(50px, 10vw, 110px);
 
-    line-height: .92;
+    line-height: .95;
 
     font-weight: 800;
 
@@ -510,11 +501,11 @@ body::before {
     background:
         linear-gradient(
             110deg,
-            #fff 10%,
-            #d5fbff 30%,
-            #00e5ff 55%,
-            #9f7aff 80%,
-            #fff 100%
+            #fff,
+            #d5fbff,
+            #00e5ff,
+            #9f7aff,
+            #fff
         );
 
     background-size: 250% auto;
@@ -530,7 +521,7 @@ body::before {
 
 @keyframes titleGradient {
     from {
-        background-position: 0% center;
+        background-position: 0 center;
     }
 
     to {
@@ -543,7 +534,7 @@ body::before {
 
     color: #a5a9b1;
 
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
 
     letter-spacing: 3px;
@@ -556,7 +547,7 @@ body::before {
 
     margin: 22px auto 0;
 
-    color: #858b95;
+    color: var(--muted);
 
     font-size: 13px;
 
@@ -564,14 +555,13 @@ body::before {
 }
 
 
-/* =====================================================
+/* =========================================================
    BUTTONS
-===================================================== */
+========================================================= */
 
 .hero-buttons {
     display: flex;
     justify-content: center;
-
     flex-wrap: wrap;
 
     gap: 10px;
@@ -596,9 +586,8 @@ body::before {
     font-weight: 700;
 
     transition:
-        transform .3s,
-        box-shadow .3s,
-        border-color .3s;
+        transform .25s,
+        box-shadow .25s;
 }
 
 .btn-primary {
@@ -612,24 +601,20 @@ body::before {
     color: #000;
 
     box-shadow:
-        0 0 25px
-        rgba(0,229,255,.12);
+        0 0 25px rgba(0,229,255,.12);
 }
 
 .btn-primary:hover {
     transform: translateY(-3px);
 
     box-shadow:
-        0 12px 35px
-        rgba(0,229,255,.22);
+        0 12px 35px rgba(0,229,255,.22);
 }
 
 .btn-secondary {
-    border:
-        1px solid rgba(255,255,255,.1);
+    border: 1px solid var(--border);
 
-    background:
-        rgba(255,255,255,.035);
+    background: rgba(255,255,255,.035);
 
     color: #fff;
 }
@@ -637,21 +622,20 @@ body::before {
 .btn-secondary:hover {
     transform: translateY(-3px);
 
-    border-color:
-        rgba(0,229,255,.5);
+    border-color: rgba(0,229,255,.5);
 
     color: #00e5ff;
 }
 
 
-/* =====================================================
+/* =========================================================
    SCROLL HINT
-===================================================== */
+========================================================= */
 
 .scroll-hint {
     position: absolute;
 
-    bottom: 28px;
+    bottom: 25px;
     left: 50%;
 
     transform: translateX(-50%);
@@ -666,7 +650,7 @@ body::before {
 
 .scroll-line {
     width: 1px;
-    height: 28px;
+    height: 27px;
 
     margin: 8px auto 0;
 
@@ -675,33 +659,23 @@ body::before {
             #fff,
             transparent
         );
-
-    animation:
-        scrollLine 1.7s infinite;
-}
-
-@keyframes scrollLine {
-    50% {
-        transform: translateY(8px);
-        opacity: .3;
-    }
 }
 
 
-/* =====================================================
+/* =========================================================
    SECTIONS
-===================================================== */
+========================================================= */
 
 section {
-    width: min(1180px, 90%);
+    width: min(var(--max-width), 90%);
 
     margin: 0 auto;
 
-    padding: 100px 0;
+    padding: 95px 0;
 }
 
 .section-top {
-    margin-bottom: 45px;
+    margin-bottom: 42px;
 }
 
 .eyebrow {
@@ -716,8 +690,7 @@ section {
 }
 
 .section-title {
-    font-size:
-        clamp(30px, 5vw, 52px);
+    font-size: clamp(30px, 5vw, 52px);
 
     line-height: 1.1;
 
@@ -735,7 +708,7 @@ section {
 
     margin-top: 12px;
 
-    color: #858b95;
+    color: var(--muted);
 
     font-size: 12px;
 
@@ -743,9 +716,9 @@ section {
 }
 
 
-/* =====================================================
+/* =========================================================
    ABOUT
-===================================================== */
+========================================================= */
 
 .about-grid {
     display: grid;
@@ -773,6 +746,9 @@ section {
     margin-top: 18px;
 }
 
+
+/* STATS */
+
 .stats {
     display: grid;
 
@@ -786,8 +762,7 @@ section {
 
     padding: 23px;
 
-    border:
-        1px solid rgba(255,255,255,.1);
+    border: 1px solid var(--border);
 
     border-radius: 16px;
 
@@ -799,21 +774,21 @@ section {
         );
 
     transition:
-        transform .35s,
-        border-color .35s;
+        transform .3s,
+        border-color .3s;
 }
 
 .stat:hover {
-    transform: translateY(-6px);
+    transform: translateY(-5px);
 
-    border-color:
-        rgba(0,229,255,.35);
+    border-color: rgba(0,229,255,.35);
 }
 
 .stat-number {
     color: #00e5ff;
 
     font-size: 25px;
+
     font-weight: 800;
 }
 
@@ -823,15 +798,16 @@ section {
     color: #666c75;
 
     font-size: 9px;
+
     font-weight: 700;
 
     letter-spacing: 1.5px;
 }
 
 
-/* =====================================================
+/* =========================================================
    SERVICES
-===================================================== */
+========================================================= */
 
 .services-grid {
     display: grid;
@@ -851,8 +827,7 @@ section {
 
     overflow: hidden;
 
-    border:
-        1px solid rgba(255,255,255,.1);
+    border: 1px solid var(--border);
 
     border-radius: 17px;
 
@@ -864,15 +839,14 @@ section {
         );
 
     transition:
-        transform .4s,
-        border-color .4s;
+        transform .3s,
+        border-color .3s;
 }
 
 .service-card:hover {
-    transform: translateY(-7px);
+    transform: translateY(-6px);
 
-    border-color:
-        rgba(0,229,255,.35);
+    border-color: rgba(0,229,255,.35);
 }
 
 .service-number {
@@ -887,13 +861,14 @@ section {
 .service-icon {
     margin: 25px 0 17px;
 
-    font-size: 28px;
+    font-size: 27px;
 }
 
 .service-card h3 {
     margin-bottom: 9px;
 
     font-size: 17px;
+
     font-weight: 600;
 }
 
@@ -906,26 +881,29 @@ section {
 }
 
 
-/* =====================================================
+/* =========================================================
    SHOWREEL
-===================================================== */
+========================================================= */
 
 .showreel-box {
     position: relative;
 
-    height: 500px;
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
+
+    min-height: 300px;
 
     overflow: hidden;
 
-    border:
-        1px solid rgba(255,255,255,.1);
+    border: 1px solid var(--border);
 
     border-radius: 22px;
 
     background: #000;
 
     box-shadow:
-        0 20px 70px rgba(0,0,0,.35);
+        0 25px 80px rgba(0,0,0,.35);
 }
 
 .showreel-video {
@@ -937,22 +915,53 @@ section {
     object-fit: cover;
 
     background: #000;
-
-    border-radius: 22px;
 }
 
-.showreel-video::-webkit-media-controls-panel {
+.video-fallback {
+    position: absolute;
+
+    inset: 0;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    text-align: center;
+
     background:
-        linear-gradient(
-            transparent,
-            rgba(0,0,0,.9)
-        );
+        radial-gradient(
+            circle,
+            rgba(0,229,255,.10),
+            transparent 40%
+        ),
+        #07090d;
+
+    padding: 20px;
+}
+
+.video-fallback.show {
+    display: flex;
+}
+
+.video-fallback h3 {
+    font-size: 20px;
+}
+
+.video-fallback p {
+    margin-top: 8px;
+
+    color: #777;
+
+    font-size: 11px;
 }
 
 
-/* =====================================================
+/* =========================================================
    PROJECTS
-===================================================== */
+========================================================= */
 
 .projects-grid {
     display: grid;
@@ -970,35 +979,33 @@ section {
 
     overflow: hidden;
 
-    border:
-        1px solid rgba(255,255,255,.1);
+    border: 1px solid var(--border);
 
     border-radius: 18px;
 
     background: #080a0e;
 
     transition:
-        transform .4s,
-        border-color .4s;
+        transform .3s,
+        border-color .3s;
 }
 
 .project-card:hover {
     transform: translateY(-7px);
 
-    border-color:
-        rgba(0,229,255,.35);
+    border-color: rgba(0,229,255,.35);
 }
 
 .project-visual {
     position: absolute;
+
     inset: 0;
 
-    transition:
-        transform .6s;
+    transition: transform .5s;
 }
 
 .project-card:hover .project-visual {
-    transform: scale(1.08);
+    transform: scale(1.06);
 }
 
 .project-one {
@@ -1007,11 +1014,6 @@ section {
             circle at 50% 35%,
             rgba(0,229,255,.28),
             transparent 25%
-        ),
-        radial-gradient(
-            circle at 30% 70%,
-            rgba(0,100,255,.12),
-            transparent 35%
         ),
         linear-gradient(
             135deg,
@@ -1027,11 +1029,6 @@ section {
             rgba(139,92,255,.30),
             transparent 27%
         ),
-        radial-gradient(
-            circle at 20% 75%,
-            rgba(80,30,255,.12),
-            transparent 40%
-        ),
         linear-gradient(
             135deg,
             #15101f,
@@ -1045,11 +1042,6 @@ section {
             circle at 45% 35%,
             rgba(255,55,150,.23),
             transparent 28%
-        ),
-        radial-gradient(
-            circle at 80% 75%,
-            rgba(255,0,80,.10),
-            transparent 35%
         ),
         linear-gradient(
             135deg,
@@ -1089,6 +1081,7 @@ section {
     margin-top: 8px;
 
     font-size: 19px;
+
     font-weight: 600;
 }
 
@@ -1101,9 +1094,9 @@ section {
 }
 
 
-/* =====================================================
+/* =========================================================
    PROCESS
-===================================================== */
+========================================================= */
 
 .process-grid {
     display: grid;
@@ -1117,18 +1110,15 @@ section {
 .process {
     padding: 23px;
 
-    border:
-        1px solid rgba(255,255,255,.1);
+    border: 1px solid var(--border);
 
     border-radius: 15px;
 
-    background:
-        rgba(255,255,255,.025);
+    background: rgba(255,255,255,.025);
 }
 
 .process-number {
-    color:
-        rgba(0,229,255,.45);
+    color: rgba(0,229,255,.45);
 
     font-size: 22px;
     font-weight: 800;
@@ -1138,7 +1128,6 @@ section {
     margin-top: 18px;
 
     font-size: 14px;
-    font-weight: 600;
 }
 
 .process p {
@@ -1152,9 +1141,9 @@ section {
 }
 
 
-/* =====================================================
+/* =========================================================
    CONTACT
-===================================================== */
+========================================================= */
 
 .contact-box {
     position: relative;
@@ -1165,8 +1154,7 @@ section {
 
     text-align: center;
 
-    border:
-        1px solid rgba(255,255,255,.1);
+    border: 1px solid var(--border);
 
     border-radius: 22px;
 
@@ -1179,9 +1167,19 @@ section {
         #080a0e;
 }
 
+.contact-content {
+    position: relative;
+
+    z-index: 2;
+}
+
 .contact-box h2 {
     font-size:
-        clamp(34px, 5vw, 60px);
+        clamp(
+            34px,
+            5vw,
+            60px
+        );
 
     line-height: 1.05;
 
@@ -1227,23 +1225,22 @@ section {
 
     padding: 0 15px;
 
-    border:
-        1px solid rgba(255,255,255,.1);
+    border: 1px solid var(--border);
 
     border-radius: 9px;
 
-    background:
-        rgba(255,255,255,.025);
+    background: rgba(255,255,255,.025);
 
     color: #dce0e6;
 
     font-size: 10px;
+
     font-weight: 600;
 
     transition:
-        transform .3s,
-        color .3s,
-        border-color .3s;
+        transform .25s,
+        color .25s,
+        border-color .25s;
 }
 
 .contact-link:hover {
@@ -1251,14 +1248,13 @@ section {
 
     color: #00e5ff;
 
-    border-color:
-        rgba(0,229,255,.45);
+    border-color: rgba(0,229,255,.45);
 }
 
 
-/* =====================================================
+/* =========================================================
    FOOTER
-===================================================== */
+========================================================= */
 
 footer {
     padding: 42px 20px;
@@ -1279,6 +1275,7 @@ footer {
     color: #fff;
 
     font-size: 17px;
+
     font-weight: 800;
 }
 
@@ -1294,19 +1291,23 @@ footer {
     color: #fff;
 }
 
+.footer-founder strong {
+    color: #cfd4db;
+}
 
-/* =====================================================
+
+/* =========================================================
    REVEAL
-===================================================== */
+========================================================= */
 
 .reveal {
     opacity: 0;
 
-    transform: translateY(25px);
+    transform: translateY(22px);
 
     transition:
-        opacity .8s ease,
-        transform .8s ease;
+        opacity .7s ease,
+        transform .7s ease;
 }
 
 .reveal.visible {
@@ -1316,48 +1317,24 @@ footer {
 }
 
 
-/* =====================================================
-   MOBILE
-===================================================== */
+/* =========================================================
+   TOAST
+========================================================= */
 
-@media(max-width: 900px) {
+.toast {
+    position: fixed;
 
-    .nav-links {
-        display: none;
-    }
+    left: 50%;
+    bottom: 25px;
 
-    .menu-button {
-        display: grid;
-        place-items: center;
-    }
+    transform:
+        translate(-50%, 20px);
 
-    .navbar.mobile-open .nav-links {
-        display: flex;
+    padding: 10px 15px;
 
-        position: absolute;
+    border: 1px solid rgba(0,229,255,.25);
 
-        top: 67px;
-        left: 0;
-        right: 0;
+    border-radius: 9px;
 
-        flex-direction: column;
-
-        align-items: stretch;
-
-        gap: 3px;
-
-        padding: 10px;
-
-        border:
-            1px solid rgba(255,255,255,.1);
-
-        border-radius: 13px;
-
-        background:
-            rgba(7,9,13,.97);
-
-        backdrop-filter: blur(20px);
-    }
-
-    .navbar.mobile-open .nav-links a {
-        display: b
+    background: rgba(7,9,13,.94);
+   
