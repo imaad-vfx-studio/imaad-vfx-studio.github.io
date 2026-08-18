@@ -6,13 +6,16 @@
 
 <title>ImaadVFX — Premium VFX Portfolio</title>
 
-<meta name="description" content="ImaadVFX — Premium Visual Effects, Motion Graphics and Creative Digital Experiences.">
+<meta name="description"
+content="ImaadVFX — Premium Visual Effects, Motion Graphics and Creative Digital Experiences.">
+
 <meta name="theme-color" content="#050608">
 
 <style>
-/* =====================================================
+
+/* =========================================================
    RESET
-===================================================== */
+========================================================= */
 
 * {
     margin: 0;
@@ -33,10 +36,6 @@ body {
     overflow-x: hidden;
 }
 
-body.loading {
-    overflow: hidden;
-}
-
 a {
     color: inherit;
     text-decoration: none;
@@ -47,24 +46,25 @@ button {
 }
 
 
-/* =====================================================
+/* =========================================================
    VARIABLES
-===================================================== */
+========================================================= */
 
 :root {
     --bg: #050608;
-    --cyan: #00e5ff;
-    --purple: #8b5cff;
+    --white: #ffffff;
     --text: #e9edf2;
     --muted: #858b95;
-    --border: rgba(255,255,255,0.10);
+    --cyan: #00e5ff;
+    --purple: #8b5cff;
+    --border: rgba(255,255,255,.10);
     --max-width: 1180px;
 }
 
 
-/* =====================================================
+/* =========================================================
    LOADING SCREEN
-===================================================== */
+========================================================= */
 
 #loader {
     position: fixed;
@@ -90,7 +90,7 @@ button {
 }
 
 .loader-logo {
-    font-size: 30px;
+    font-size: 28px;
     font-weight: 800;
     letter-spacing: -1px;
     color: #fff;
@@ -100,51 +100,54 @@ button {
     color: var(--cyan);
 }
 
-.loader-bar {
-    width: 180px;
-    height: 3px;
-    margin-top: 22px;
+.loader-line {
+    width: 120px;
+    height: 2px;
+    margin-top: 18px;
     overflow: hidden;
-    border-radius: 20px;
-    background: rgba(255,255,255,.08);
+    background: rgba(255,255,255,.12);
+    border-radius: 10px;
 }
 
-.loader-progress {
-    width: 35%;
+.loader-line::after {
+    content: "";
+    display: block;
+    width: 45%;
     height: 100%;
-    border-radius: 20px;
     background: var(--cyan);
-    animation: loading 1.2s ease-in-out infinite;
+    box-shadow: 0 0 15px var(--cyan);
+
+    animation: loadingBar 1s ease-in-out infinite;
 }
 
 .loader-text {
     margin-top: 12px;
-    color: #666;
+    color: #666c75;
     font-size: 9px;
     letter-spacing: 2px;
 }
 
-@keyframes loading {
+@keyframes loadingBar {
     0% {
-        transform: translateX(-150%);
+        transform: translateX(-120%);
     }
 
     100% {
-        transform: translateX(600%);
+        transform: translateX(350%);
     }
 }
 
 
-/* =====================================================
+/* =========================================================
    BACKGROUND
-===================================================== */
+========================================================= */
 
 body::before {
     content: "";
     position: fixed;
     inset: 0;
-    z-index: -10;
     pointer-events: none;
+    z-index: -10;
 
     background:
         radial-gradient(
@@ -181,9 +184,9 @@ body::before {
 }
 
 
-/* =====================================================
+/* =========================================================
    PARTICLES
-===================================================== */
+========================================================= */
 
 #particles {
     position: fixed;
@@ -197,9 +200,37 @@ body::before {
 }
 
 
-/* =====================================================
+/* =========================================================
+   CURSOR LIGHT
+========================================================= */
+
+.cursor-light {
+    position: fixed;
+
+    width: 260px;
+    height: 260px;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+    z-index: -2;
+
+    transform: translate(-50%, -50%);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,229,255,.08),
+            transparent 68%
+        );
+
+    filter: blur(8px);
+}
+
+
+/* =========================================================
    NAVBAR
-===================================================== */
+========================================================= */
 
 .navbar {
     position: fixed;
@@ -210,6 +241,7 @@ body::before {
     transform: translateX(-50%);
 
     width: min(1150px, 92%);
+
     min-height: 60px;
 
     padding: 10px 16px;
@@ -218,7 +250,10 @@ body::before {
     align-items: center;
     justify-content: space-between;
 
-    background: rgba(7,9,13,.88);
+    background: rgba(7,9,13,.82);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 
     border: 1px solid var(--border);
     border-radius: 16px;
@@ -260,7 +295,7 @@ body::before {
     font-weight: 800;
 }
 
-.logo-text span {
+.logo span span {
     color: var(--cyan);
 }
 
@@ -268,6 +303,7 @@ body::before {
     display: flex;
     align-items: center;
     gap: 24px;
+
     list-style: none;
 }
 
@@ -275,6 +311,8 @@ body::before {
     color: #90949c;
     font-size: 11px;
     font-weight: 600;
+
+    transition: color .25s ease;
 }
 
 .nav-links a:hover {
@@ -283,8 +321,11 @@ body::before {
 
 .nav-contact {
     padding: 8px 14px;
+
     border-radius: 8px;
+
     background: var(--cyan);
+
     color: #000 !important;
 }
 
@@ -298,15 +339,15 @@ body::before {
     border-radius: 9px;
 
     background: rgba(255,255,255,.04);
-    color: white;
 
+    color: white;
     cursor: pointer;
 }
 
 
-/* =====================================================
+/* =========================================================
    HERO
-===================================================== */
+========================================================= */
 
 .hero {
     min-height: 100vh;
@@ -320,22 +361,14 @@ body::before {
     text-align: center;
 
     padding: 140px 20px 100px;
-}
 
-.hero-content {
-    position: relative;
-    z-index: 2;
-
-    width: 100%;
-    max-width: 900px;
+    overflow: hidden;
 }
 
 .hero-orb {
     position: absolute;
-
     border-radius: 50%;
     pointer-events: none;
-
     filter: blur(30px);
 }
 
@@ -348,7 +381,8 @@ body::before {
     top: 20%;
     left: 8%;
 
-    animation: floatOne 8s ease-in-out infinite alternate;
+    animation:
+        floatOne 8s ease-in-out infinite alternate;
 }
 
 .hero-orb.two {
@@ -360,7 +394,8 @@ body::before {
     bottom: 10%;
     right: 8%;
 
-    animation: floatTwo 10s ease-in-out infinite alternate;
+    animation:
+        floatTwo 10s ease-in-out infinite alternate;
 }
 
 @keyframes floatOne {
@@ -373,6 +408,14 @@ body::before {
     to {
         transform: translate(-60px,50px);
     }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    max-width: 900px;
 }
 
 .badge {
@@ -427,11 +470,11 @@ body::before {
     background:
         linear-gradient(
             110deg,
-            #fff,
-            #d5fbff,
-            var(--cyan),
-            #9f7aff,
-            #fff
+            #fff 10%,
+            #d5fbff 30%,
+            var(--cyan) 55%,
+            #9f7aff 80%,
+            #fff 100%
         );
 
     background-size: 250% auto;
@@ -441,7 +484,8 @@ body::before {
 
     color: transparent;
 
-    animation: titleGradient 7s linear infinite;
+    animation:
+        titleGradient 7s linear infinite;
 }
 
 @keyframes titleGradient {
@@ -499,14 +543,31 @@ body::before {
 
     font-size: 11px;
     font-weight: 700;
+
+    transition:
+        transform .3s,
+        box-shadow .3s;
 }
 
 .btn-primary {
-    background: var(--cyan);
+    background:
+        linear-gradient(
+            135deg,
+            var(--cyan),
+            #4aefff
+        );
+
     color: #000;
 
     box-shadow:
         0 0 25px rgba(0,229,255,.12);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 35px rgba(0,229,255,.22);
 }
 
 .btn-secondary {
@@ -514,11 +575,15 @@ body::before {
 
     background: rgba(255,255,255,.035);
 
-    color: #fff;
+    color: white;
 }
 
-.btn:hover {
+.btn-secondary:hover {
     transform: translateY(-3px);
+
+    border-color: rgba(0,229,255,.5);
+
+    color: var(--cyan);
 }
 
 .scroll-hint {
@@ -533,6 +598,7 @@ body::before {
 
     font-size: 8px;
     font-weight: 600;
+
     letter-spacing: 3px;
 }
 
@@ -544,15 +610,24 @@ body::before {
 
     background:
         linear-gradient(
-            #fff,
+            white,
             transparent
         );
+
+    animation: scrollLine 1.7s infinite;
+}
+
+@keyframes scrollLine {
+    50% {
+        transform: translateY(8px);
+        opacity: .3;
+    }
 }
 
 
-/* =====================================================
+/* =========================================================
    SECTIONS
-===================================================== */
+========================================================= */
 
 section {
     width: min(var(--max-width), 90%);
@@ -604,9 +679,9 @@ section {
 }
 
 
-/* =====================================================
+/* =========================================================
    ABOUT
-===================================================== */
+========================================================= */
 
 .about-grid {
     display: grid;
@@ -627,7 +702,7 @@ section {
 }
 
 .about-copy strong {
-    color: #fff;
+    color: white;
 }
 
 .about-copy p + p {
@@ -652,7 +727,22 @@ section {
     border-radius: 16px;
 
     background:
-        rgba(255,255,255,.035);
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.018)
+        );
+
+    transition:
+        transform .35s,
+        border-color .35s;
+}
+
+.stat:hover {
+    transform: translateY(-6px);
+
+    border-color:
+        rgba(0,229,255,.35);
 }
 
 .stat-number {
@@ -674,9 +764,9 @@ section {
 }
 
 
-/* =====================================================
+/* =========================================================
    SERVICES
-===================================================== */
+========================================================= */
 
 .services-grid {
     display: grid;
@@ -688,23 +778,35 @@ section {
 }
 
 .service-card {
+    position: relative;
+
     min-height: 250px;
 
     padding: 27px;
+
+    overflow: hidden;
 
     border: 1px solid var(--border);
 
     border-radius: 17px;
 
     background:
-        rgba(255,255,255,.035);
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.05),
+            rgba(255,255,255,.015)
+        );
+
+    transition:
+        transform .4s,
+        border-color .4s;
 }
 
 .service-card:hover {
+    transform: translateY(-7px);
+
     border-color:
         rgba(0,229,255,.35);
-
-    transform: translateY(-6px);
 }
 
 .service-number {
@@ -712,6 +814,8 @@ section {
 
     font-size: 9px;
     font-weight: 700;
+
+    letter-spacing: 1px;
 }
 
 .service-icon {
@@ -724,6 +828,7 @@ section {
     margin-bottom: 9px;
 
     font-size: 17px;
+    font-weight: 600;
 }
 
 .service-card p {
@@ -735,16 +840,12 @@ section {
 }
 
 
-/* =====================================================
+/* =========================================================
    SHOWREEL
-===================================================== */
+========================================================= */
 
 .showreel-box {
     position: relative;
-
-    width: 100%;
-
-    height: 500px;
 
     overflow: hidden;
 
@@ -752,55 +853,25 @@ section {
 
     border-radius: 22px;
 
-    background: #000;
+    background: #07090d;
 }
 
 .showreel-video {
-    width: 100%;
-    height: 100%;
-
     display: block;
 
-    object-fit: cover;
+    width: 100%;
+
+    height: auto;
+
+    max-height: 650px;
 
     background: #000;
 }
 
-.showreel-fallback {
-    position: absolute;
 
-    inset: 0;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    flex-direction: column;
-
-    text-align: center;
-
-    pointer-events: none;
-}
-
-.showreel-fallback h3 {
-    font-size: 24px;
-}
-
-.showreel-fallback p {
-    margin-top: 7px;
-
-    color: #666;
-
-    font-size: 9px;
-
-    letter-spacing: 2px;
-}
-
-
-/* =====================================================
+/* =========================================================
    PROJECTS
-===================================================== */
+========================================================= */
 
 .projects-grid {
     display: grid;
@@ -823,12 +894,28 @@ section {
     border-radius: 18px;
 
     background: #080a0e;
+
+    transition:
+        transform .4s,
+        border-color .4s;
+}
+
+.project-card:hover {
+    transform: translateY(-7px);
+
+    border-color:
+        rgba(0,229,255,.35);
 }
 
 .project-visual {
     position: absolute;
-
     inset: 0;
+
+    transition: transform .6s;
+}
+
+.project-card:hover .project-visual {
+    transform: scale(1.08);
 }
 
 .project-one {
@@ -882,6 +969,8 @@ section {
 
     padding: 25px;
 
+    z-index: 3;
+
     background:
         linear-gradient(
             transparent,
@@ -902,6 +991,7 @@ section {
     margin-top: 8px;
 
     font-size: 19px;
+    font-weight: 600;
 }
 
 .project-info p {
@@ -913,9 +1003,9 @@ section {
 }
 
 
-/* =====================================================
+/* =========================================================
    PROCESS
-===================================================== */
+========================================================= */
 
 .process-grid {
     display: grid;
@@ -961,11 +1051,15 @@ section {
 }
 
 
-/* =====================================================
+/* =========================================================
    CONTACT
-===================================================== */
+========================================================= */
 
 .contact-box {
+    position: relative;
+
+    overflow: hidden;
+
     padding: 80px 25px;
 
     text-align: center;
@@ -983,8 +1077,14 @@ section {
         #080a0e;
 }
 
+.contact-content {
+    position: relative;
+    z-index: 2;
+}
+
 .contact-box h2 {
-    font-size: clamp(34px, 5vw, 60px);
+    font-size:
+        clamp(34px, 5vw, 60px);
 
     line-height: 1.05;
 
@@ -1005,6 +1105,8 @@ section {
     color: #747a84;
 
     font-size: 12px;
+
+    line-height: 1.8;
 }
 
 .contact-links {
@@ -1032,28 +1134,30 @@ section {
 
     border-radius: 9px;
 
-    background: rgba(255,255,255,.025);
+    background:
+        rgba(255,255,255,.025);
 
     color: #dce0e6;
 
     font-size: 10px;
-
     font-weight: 600;
+
+    transition: .3s;
 }
 
 .contact-link:hover {
+    transform: translateY(-3px);
+
     color: var(--cyan);
 
     border-color:
         rgba(0,229,255,.45);
-
-    transform: translateY(-3px);
 }
 
 
-/* =====================================================
+/* =========================================================
    FOOTER
-===================================================== */
+========================================================= */
 
 footer {
     padding: 42px 20px;
@@ -1061,7 +1165,8 @@ footer {
     text-align: center;
 
     border-top:
-        1px solid rgba(255,255,255,.07);
+        1px solid
+        rgba(255,255,255,.07);
 
     color: #5f656e;
 
@@ -1074,7 +1179,6 @@ footer {
     color: white;
 
     font-size: 17px;
-
     font-weight: 800;
 }
 
@@ -1091,30 +1195,32 @@ footer {
 }
 
 
-/* =====================================================
+/* =========================================================
    REVEAL
-===================================================== */
+========================================================= */
 
 .reveal {
     opacity: 0;
-    transform: translateY(20px);
+
+    transform: translateY(25px);
 
     transition:
-        opacity .6s ease,
-        transform .6s ease;
+        opacity .7s ease,
+        transform .7s ease;
 }
 
 .reveal.visible {
     opacity: 1;
+
     transform: translateY(0);
 }
 
 
-/* =====================================================
+/* =========================================================
    MOBILE
-===================================================== */
+========================================================= */
 
-@media(max-width: 900px) {
+@media(max-width:900px) {
 
     .nav-links {
         display: none;
@@ -1144,11 +1250,12 @@ footer {
 
         border-radius: 13px;
 
-        background: #07090d;
+        background: rgba(7,9,13,.97);
     }
 
     .navbar.mobile-open .nav-links a {
         display: block;
+
         padding: 10px;
     }
 
@@ -1171,7 +1278,7 @@ footer {
 }
 
 
-@media(max-width: 580px) {
+@media(max-width:580px) {
 
     .navbar {
         top: 12px;
@@ -1180,7 +1287,9 @@ footer {
 
     .hero {
         min-height: 100svh;
-        padding: 130px 18px 90px;
+
+        padding:
+            130px 18px 90px;
     }
 
     .hero h1 {
@@ -1188,13 +1297,9 @@ footer {
         letter-spacing: -3px;
     }
 
-    .hero-subtitle {
-        font-size: 9px;
-        letter-spacing: 2px;
-    }
-
     section {
         width: 90%;
+
         padding: 75px 0;
     }
 
@@ -1204,8 +1309,8 @@ footer {
         grid-template-columns: 1fr;
     }
 
-    .showreel-box {
-        height: 350px;
+    .showreel-video {
+        min-height: 220px;
     }
 
     .contact-box {
@@ -1219,117 +1324,5 @@ footer {
 }
 
 
-@media(max-width: 380px) {
-
-    .stats {
-        grid-template-columns: 1fr;
-    }
-
-    .hero h1 {
-        font-size: 48px;
-    }
-}
-
-
-/* =====================================================
-   REDUCED MOTION
-===================================================== */
-
-@media(prefers-reduced-motion: reduce) {
-
-    *,
-    *::before,
-    *::after {
-        animation: none !important;
-        transition: none !important;
-        scroll-behavior: auto !important;
-    }
-}
-</style>
-</head>
-
-<body class="loading">
-
-<!-- =====================================================
-     LOADER
-===================================================== -->
-
-<div id="loader">
-
-    <div class="loader-logo">
-        Imaad<span>VFX</span>
-    </div>
-
-    <div class="loader-bar">
-        <div class="loader-progress"></div>
-    </div>
-
-    <div class="loader-text">
-        LOADING PORTFOLIO
-    </div>
-
-</div>
-
-
-<div class="grid-background"></div>
-
-<canvas id="particles"></canvas>
-
-
-<!-- =====================================================
-     NAVBAR
-===================================================== -->
-
-<nav class="navbar" id="navbar">
-
-    <a href="#home" class="logo">
-
-        <span class="logo-mark">I</span>
-
-        <span class="logo-text">
-            Imaad<span>VFX</span>
-        </span>
-
-    </a>
-
-
-    <ul class="nav-links">
-
-        <li>
-            <a href="#about">About</a>
-        </li>
-
-        <li>
-            <a href="#services">Services</a>
-        </li>
-
-        <li>
-            <a href="#showreel">Showreel</a>
-        </li>
-
-        <li>
-            <a href="#projects">Projects</a>
-        </li>
-
-        <li>
-            <a href="#contact" class="nav-contact">
-                Contact
-            </a>
-        </li>
-
-    </ul>
-
-
-    <button
-        class="menu-button"
-        id="menuButton"
-        type="button"
-        aria-label="Open menu"
-    >
-        ☰
-    </button>
-
-</nav>
-
-
-<!-- ==============================
+/* =========================================================
+   RED
